@@ -18,6 +18,18 @@
   font-size: large;
 }
 
+.Log-line {
+  padding: 0 0 6px;
+  width: 500px;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid transparent;
+}
+.Log-line:focus {
+  outline: 0;
+  border-bottom-color: #ddd;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

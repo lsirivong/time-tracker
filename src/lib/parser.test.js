@@ -52,14 +52,14 @@ describe('.timeDiff', () => {
 
 describe('.parse', () => {
   it('handles malformed text', () => {
-    expect(parser.parse('text')).toEqual([]);
+    expect(parser.parse('text')).toEqual([null]);
   });
 
   it('parses all lines', () => {
-    const result = parser.parse(`
-2016-10-16T23:59:00.000Z Note
-2016-10-16T23:59:50.000Z Something Else
-    `);
+    const result = parser.parse([
+      '2016-10-16T23:59:00.000Z Note',
+      '2016-10-16T23:59:50.000Z Something Else',
+    ].join('\n'));
     expect(
       result.length
     ).toEqual(2); // 50 seconds

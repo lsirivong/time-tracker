@@ -1,5 +1,7 @@
-
 const parseLine = line => {
+  // $0 - depth separator
+  // $1 - timestamp
+  // $2 - note
   const lineRegex = /^(-*)([^ ]+)[ ]+(.*)$/g;
   const matches = lineRegex.exec(line);
   return matches && matches.length === 4
@@ -12,7 +14,7 @@ const parseLine = line => {
 }
 
 const timeDiff = (a, b) => {
-  return Number(a) - Number(b);
+  return a - b;
 }
 
 const parse = text => {
@@ -22,14 +24,18 @@ const parse = text => {
         return result.concat(parseLine(line))
       },
       []
-    ).filter(l => l);
+    );
 }
 
 const compute = logs => {
   return logs.reduce(
     (acc, log, i, source) => {
-      const nextLogAtSameDepth = source.slice(i + 1).find(l => l.depth <= log.depth);
-      const duration = nextLogAtSameDepth ? timeDiff(nextLogAtSameDepth.timestamp, log.timestamp) : 0;
+      const nextLogAtSameDepth = source
+        .slice(i + 1)
+        .find(l => l && log && l.depth <= log.depth);
+      const duration = nextLogAtSameDepth
+        ? timeDiff(nextLogAtSameDepth.timestamp, log.timestamp)
+        : 0;
       return acc.concat(
         {
           ...log,

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import parser from './lib/parser';
 import Duration from './components/atom/Duration';
@@ -95,6 +94,11 @@ class App extends Component {
         }
         break;
       }
+
+      default: {
+        // Do Nothing
+        break;
+      }
     }
   }
 
@@ -102,27 +106,25 @@ class App extends Component {
     const computed = parser.parseAndCompute(this.state.logs.join('\n'));
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome</h2>
-        </div>
-        <ol className="App-intro">
-          {this.state.logs.map((log, i) => (
-            <li className="Log-item" key={`log_${i}`}>
-              <input
-                type="text"
-                className="Log-input"
-                onChange={this.handleLogsChange.bind(this, i)}
-                onKeyDown={this.handleKeyDown.bind(this, i)}
-                ref={c => this.logInputs[i] = c}
-                value={log}
-                style={styles.logLine}
-              />
-              {' '}
-              <Duration value={computed[i].duration} />
-            </li>
-          ))}
-        </ol>
+        {this.state.logs.map((log, i) => (
+          <div className="Log-item" key={`log_${i}`}>
+            <input
+              type="text"
+              className="Log-input"
+              onChange={this.handleLogsChange.bind(this, i)}
+              onKeyDown={this.handleKeyDown.bind(this, i)}
+              ref={c => this.logInputs[i] = c}
+              value={log}
+              style={styles.logLine}
+            />
+            {' '}
+            <Duration value={computed[i].duration} />
+          </div>
+        ))}
+
+        <code>
+          {JSON.stringify(parser.computeTags(parser.parse(this.state.logs.join('\n'))), null, 2)}
+        </code>
       </div>
     );
   }

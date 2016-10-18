@@ -2,7 +2,8 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import './App.css';
 import parser from './lib/parser';
-import Duration from './components/atom/Duration';
+import Duration from './components/atom/Duration/';
+import TagSummary from './components/atom/TagSummary/';
 
 const keyCodes = {
   enter: 13,
@@ -103,7 +104,10 @@ class App extends Component {
   }
 
   render() {
-    const computed = parser.parseAndCompute(this.state.logs.join('\n'));
+    const logs = this.state.logs.join('\n');
+    const parsedLogs = parser.parse(logs);
+    const computed = parser.compute(parsedLogs);
+    const tags = parser.computeTags(parsedLogs);
     return (
       <div className="App">
         {this.state.logs.map((log, i) => (
@@ -122,9 +126,7 @@ class App extends Component {
           </div>
         ))}
 
-        <code>
-          {JSON.stringify(parser.computeTags(parser.parse(this.state.logs.join('\n'))), null, 2)}
-        </code>
+        <TagSummary tags={tags} />
       </div>
     );
   }

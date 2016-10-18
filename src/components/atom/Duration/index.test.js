@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Duration from './Duration';
+import Duration from './index';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

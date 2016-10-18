@@ -1,10 +1,12 @@
 const parseTags = text => {
   const tagRegex = /\[([^\]]*)\]/g;
-  let matches = null;
   let tags = [];
-  while ((matches = tagRegex.exec(text)) !== null) {
+  let matches = tagRegex.exec(text);
+  while (matches !== null) {
     tags.push(matches[1]);
+    matches = tagRegex.exec(text)
   }
+
   return tags;
 }
 
@@ -14,7 +16,6 @@ const parseLine = line => {
   // $2 - note
   const lineRegex = /^(-*)([^ ]+)[ ]+(.*)$/g;
   const matches = lineRegex.exec(line);
-  const tagRegex = /\[([^\]]*)\]/g;
   return matches && matches.length === 4
     ? {
       note: matches[3],
@@ -64,7 +65,7 @@ const computeTags = logs => {
     (acc, log, i, source) => {
       (log.tags || []).forEach(tag => {
         const computedTag = acc[tag] || { duration: 0 };
-        computedTag.duration = computedTag.duration + log.duration;
+        computedTag.duration += log.duration;
 
         return acc[tag] = computedTag;
       });

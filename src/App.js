@@ -108,10 +108,10 @@ class App extends Component {
         </div>
         <ol className="App-intro">
           {this.state.logs.map((log, i) => (
-            <li key={`log_${i}`}>
+            <li className="Log-item" key={`log_${i}`}>
               <input
                 type="text"
-                className="Log-line"
+                className="Log-input"
                 onChange={this.handleLogsChange.bind(this, i)}
                 onKeyDown={this.handleKeyDown.bind(this, i)}
                 ref={c => this.logInputs[i] = c}

@@ -18,14 +18,21 @@
   font-size: large;
 }
 
-.Log-line {
+.Log-container {
+  padding: 0;
+}
+.Log-item {
+  display: flex;
+}
+.Log-input {
   padding: 0 0 6px;
   width: 500px;
   box-sizing: border-box;
   border: 0;
   border-bottom: 1px solid transparent;
+  flex: 1 1 0;
 }
-.Log-line:focus {
+.Log-input:focus {
   outline: 0;
   border-bottom-color: #ddd;
 }

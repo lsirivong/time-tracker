@@ -5,6 +5,7 @@ import parser from './lib/parser';
 import Duration from './components/atom/Duration/';
 import TagSummary from './components/atom/TagSummary/';
 
+const STORAGE_KEY = 'tt_data';
 const keyCodes = {
   enter: 13,
   rightBracket: 221, // ']'
@@ -103,6 +104,22 @@ class App extends Component {
     }
   }
 
+  handleSaveClick = () => {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.logs));
+  }
+
+  handleLoadClick = () => {
+    this.setState(state => {
+      const storedData = window.localStorage.getItem(STORAGE_KEY);
+      const d = storedData
+        ? JSON.parse(storedData)
+        : [];
+      return {
+        logs: d.concat(this.state.logs)
+      }
+    })
+  }
+
   render() {
     const logs = this.state.logs.join('\n');
     const parsedLogs = parser.parse(logs);
@@ -110,6 +127,10 @@ class App extends Component {
     const tags = parser.computeTags(parsedLogs);
     return (
       <div className="App">
+        <div>
+          <button onClick={this.handleSaveClick}>Save</button>
+          <button onClick={this.handleLoadClick}>Load</button>
+        </div>
         {this.state.logs.map((log, i) => (
           <div className="Log-item" key={`log_${i}`}>
             <input

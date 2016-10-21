@@ -1,3 +1,6 @@
+import moment from 'moment';
+import { TIMESTAMP_FORMAT } from './constants';
+
 const parseTags = text => {
   const tagRegex = /\[([^\]]*)\]/g;
   let tags = [];
@@ -19,7 +22,7 @@ const parseLine = line => {
   return matches && matches.length === 4
     ? {
       note: matches[3],
-      timestamp: new Date(matches[2]),
+      timestamp: moment(matches[2], TIMESTAMP_FORMAT),
       depth: matches[1].length,
       tags: parseTags(matches[3])
     }
@@ -27,7 +30,7 @@ const parseLine = line => {
 }
 
 const timeDiff = (a, b) => {
-  return a - b;
+  return a.diff(b);
 }
 
 const parse = text => {

@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import './App.css';
+import moment from 'moment';
 import parser from './lib/parser';
 import Duration from './components/atom/Duration/';
 import TagSummary from './components/atom/TagSummary/';
+import './App.css';
+import { TIMESTAMP_FORMAT } from './lib/constants';
 
 const STORAGE_KEY = 'tt_data';
 const keyCodes = {
@@ -18,9 +20,13 @@ const styles = {
   }
 };
 
+const now = () => new Date();
+
+const dateToString = date => moment(date).format(TIMESTAMP_FORMAT);
+
 const appendStamp = val => (
   (/^$/g).test(val)
-    ? `${val}${(new Date()).toISOString()} `
+    ? `${val}${dateToString(now())} `
     : val
 );
 
@@ -29,7 +35,7 @@ const setLog = (value, index, state) => {
   const prevVal = newLogs[index];
 
   const newVal = (_.isEmpty(prevVal))
-    ? `${(new Date()).toISOString()} ${value}`
+    ? `${dateToString(now())} ${value}`
     : value;
   newLogs[index] = appendStamp(newVal);
   return {

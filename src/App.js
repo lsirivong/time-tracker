@@ -43,16 +43,41 @@ const setLog = (value, index, state) => {
   };
 };
 
+const hasStorage = () => {
+  return window && !!window.localStorage;
+}
+
 class App extends Component {
   state = {
-    logs: ['']
+    logs: [''],
+    autoSaveOn: true,
   };
 
   // ref tracker
   logInputs = [];
 
+  autoSaveTimer = null;
+
+  componentDidMount() {
+    this.handleLoadClick();
+  }
+
   handleLogsChange = (index, e) => {
-    this.setState(setLog.bind(this, e.target.value, index));
+    this.setState(
+      setLog.bind(this, e.target.value, index),
+      () => {
+        if (this.autoSaveTimer) {
+          window.clearTimeout(this.autoSaveTimer);
+          this.autoSaveTimer = null;
+        }
+
+        this.autoSaveTimer = window.setTimeout(() => {
+          if (this && typeof this.handleSaveClick === 'function') {
+            this.handleSaveClick();
+          }
+        }, 1000)
+      }
+    );
   }
 
   setFocus = (i) => {
@@ -111,19 +136,27 @@ class App extends Component {
   }
 
   handleSaveClick = () => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.logs));
+    hasStorage() && window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.logs));
   }
 
   handleLoadClick = () => {
+    if (!hasStorage()) {
+      return;
+    }
+
     this.setState(state => {
       const storedData = window.localStorage.getItem(STORAGE_KEY);
       const d = storedData
         ? JSON.parse(storedData)
-        : [];
+        : [''];
       return {
         logs: d.concat(this.state.logs)
       }
     })
+  }
+
+  handleClearClick = () => {
+    this.setState({ logs: [] });
   }
 
   render() {
@@ -134,8 +167,14 @@ class App extends Component {
     return (
       <div className="App">
         <div>
+          <label>
+            Auto-save?
+            {' '}
+            <input type="checkbox" onChange={this.handleAutoSaveChange} value={this.state.autoSaveOn} />
+          </label>
           <button onClick={this.handleSaveClick}>Save</button>
           <button onClick={this.handleLoadClick}>Load</button>
+          <button onClick={this.handleClearClick}>Clear</button>
         </div>
         {this.state.logs.map((log, i) => (
           <div className="Log-item" key={`log_${i}`}>

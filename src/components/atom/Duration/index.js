@@ -5,7 +5,7 @@ import './index.css';
 
 const Duration = ({ value }) => (
   <span className="Log-duration">
-    {moment.duration(value).format('hh:mm', { trim: false })}
+    {moment.duration(value).format('h:mm', { trim: false })}
   </span>
 )
 

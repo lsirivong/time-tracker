@@ -14,12 +14,6 @@ const keyCodes = {
   leftBracket: 219, // '['
 }
 
-const styles = {
-  logLine: {
-    padding: '2px 2px'
-  }
-};
-
 const now = () => new Date();
 
 const dateToString = date => moment(date).format(TIMESTAMP_FORMAT);
@@ -136,7 +130,9 @@ class App extends Component {
   }
 
   handleSaveClick = () => {
-    hasStorage() && window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.logs));
+    if (hasStorage()) {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.logs));
+    }
   }
 
   handleLoadClick = () => {
@@ -166,7 +162,8 @@ class App extends Component {
     const tags = parser.computeTags(parsedLogs);
     return (
       <div className="App">
-        <div>
+        <h1>Activity Logger</h1>
+        <div className="Toolbar">
           <label>
             Auto-save?
             {' '}
@@ -185,7 +182,6 @@ class App extends Component {
               onKeyDown={this.handleKeyDown.bind(this, i)}
               ref={c => this.logInputs[i] = c}
               value={log}
-              style={styles.logLine}
             />
             {' '}
             <Duration value={computed[i].duration} />

@@ -1,5 +1,51 @@
+html {
+  background: papayawhip;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Courier, monospace;
+}
+
+h1 {
+  text-align: center;
+}
+
+input[type="text"] {
+  padding: 12px 6px;
+  width: 500px;
+  box-sizing: border-box;
+  border: 0;
+  flex: 1 1 0;
+  background: rgba(0,0,0,0.1);
+  font-family: inherit;
+  font-size: 1em;
+  cursor: pointer;
+}
+input[type="text"]:focus {
+  outline: 0;
+  border-bottom-color: #ddd;
+  background: rgba(0,0,0,0.025);
+  box-shadow: 2px 2px 1px -1px rgba(0, 0, 0, 0.5) inset;
+}
+input[type="text"]:hover {
+  background: rgba(0,0,0,0.05)
+}
+
+button {
+  background: rgba(0, 0, 0, 0);
+  margin: 0 3px;
+  padding: 4px 13px;
+  font-size: 1em;
+  font-family: inherit;
+  border-radius: 2px;
+  border: 2px solid #000;
+  cursor: pointer;
+  transition: all 200ms ease-out;
+}
+
+button:hover {
+  background: rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
 }

@@ -1,5 +1,6 @@
 .Log-duration {
-  flex: 0 0 90px;
+  flex: 0 0 auto;
+  margin-left: 10px;
   font-family: Courier, monospace;
   text-align: right;
 }

@@ -152,7 +152,7 @@ class App extends Component {
   }
 
   handleClearClick = () => {
-    this.setState({ logs: [] });
+    this.setState({ logs: [''] });
   }
 
   render() {

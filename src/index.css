@@ -42,10 +42,14 @@ button {
   border-radius: 2px;
   border: 2px solid #000;
   cursor: pointer;
-  transition: all 200ms ease-out;
+  transition: background-color 200ms ease-out, color 200ms ease-out;
 }
 
 button:hover {
   background: rgba(0, 0, 0, 1);
   color: rgba(255, 255, 255, 1);
+}
+
+button:active {
+  transform: translateY(2px);
 }

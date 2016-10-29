@@ -1,6 +1,7 @@
 .App {
-  max-width: 23em;
+  width: 23em;
   margin: 2em auto;
+  padding: 0 2em;
 }
 
 .Toolbar {

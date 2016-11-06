@@ -8,6 +8,13 @@ const TagSummary = ({ tags = {} }) => (
         {tagName}: <Duration value={tags[tagName].duration} />
       </div>
     )}
+    <div key="total">
+      <strong>Total</strong>: <Duration
+        value={Object.keys(tags).reduce(
+          (result, tagName) => result + tags[tagName].duration,
+          0
+        )} />
+    </div>
   </code>
 );
 

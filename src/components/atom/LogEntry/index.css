@@ -1,0 +1,8 @@
+.Log-container {
+  padding: 0;
+}
+.Log-item {
+  display: flex;
+  margin-bottom: 6px;
+  align-items: center;
+}

@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import moment from 'moment';
 import parser from './lib/parser';
-import Duration from './components/atom/Duration/';
 import TagSummary from './components/atom/TagSummary/';
+import LogEntry from './components/atom/LogEntry/';
 import './App.css';
 import { TIMESTAMP_FORMAT } from './lib/constants';
 
@@ -174,18 +174,14 @@ class App extends Component {
           <button onClick={this.handleClearClick}>Clear</button>
         </div>
         {this.state.logs.map((log, i) => (
-          <div className="Log-item" key={`log_${i}`}>
-            <input
-              type="text"
-              className="Log-input"
-              onChange={this.handleLogsChange.bind(this, i)}
-              onKeyDown={this.handleKeyDown.bind(this, i)}
-              ref={c => this.logInputs[i] = c}
-              value={log}
-            />
-            {' '}
-            <Duration value={computed[i].duration} />
-          </div>
+          <LogEntry
+            key={`log_${i}`}
+            onChange={this.handleLogsChange.bind(this, i)}
+            onKeyDown={this.handleKeyDown.bind(this, i)}
+            ref={c => this.logInputs[i] = c}
+            value={log}
+            duration={computed[i].duration}
+          />
         ))}
 
         <TagSummary tags={tags} />
